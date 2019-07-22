@@ -1,68 +1,58 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#cReact/Redux Technical challenge
 
-## Available Scripts
+## Data
 
-In the project directory, you can run:
+The project contains a data set describing the location and metadata of boat ramps in Australia's Gold Coast. The data set can be found under ./data/boat_ramps.geojson.
 
-### `npm start`
+It is a standard GeoJSON file, with each feature consisting of a geometry and properties, such as owner, material that the ramp is made of, etc.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The challenge
+Your goal is to build a React and Redux-based UI to explore this data. The interface should have the following features:
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+A map capable of showing the position of all the boat ramps.
+A 'construction material' sidebar that displays the number of ramps per material.
+An 'area' sidebar that displays the number of ramps per area range. The ranges are [0, 50), [50, 200), and [200, 526)
+Zooming in the map should filter the sidebar data to include only those ramps which are currently visible in the viewport.
+When clicking on either a 'construction material' or 'area' in the sidebar, the map will filter to only show ramps for the current selection.
+Technology choices
+The use of React and Redux is required. Apart from that, you are completely free to choose libraries, frameworks and tools to best assist you in this challenge. The choice of the method of serving the data to the UI is up to you, feel free to import it from a static json file.
 
-### `npm test`
+Bonus Points
+Serve the geojson data from a RESTful API built in the technology of your choice rather than just importing from a static json file.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Once complete
+When you've finished writing your code, please host it in a publicly accessible location (such as Github) for us to clone, along with a readme on how to run it.
 
-### `npm run build`
+## Plan
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Simple UI with two areas (see UI.jpg)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+- Filters:
+  - ramp material
+  - area (min, max)
+- Map - using mapbox
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. State (Redux store)
+   material: oneOf [ALL, CONCRETE, ...]
+   are: {min, max}
+   borderBox: [W, S, E, N] // W - stands for west border (longitude)
 
-### `npm run eject`
+3. How it will work?
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Check if initial data are in `localStorage` for initial filters and if data is not outdated
+  - if data in local storage and not outdated -> hydrate redux
+  - otherwise, pull the data from the "server" and store in cache, store in `localStorage`, hydrate redux
+- On filters change:
+  - check if data for given filters combination is in cache
+    - if yes, hydrate redudx,
+    - if not, pull the data from the "server", cache it, hydrate redux
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. Server
+   A function that takes filters as an argument and returns features array
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+5. Steps
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- mock ui
+- write tests
+- wire up redux
+- add responsive map

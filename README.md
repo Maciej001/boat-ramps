@@ -33,7 +33,7 @@ When you've finished writing your code, please host it in a publicly accessible 
 - Map - using mapbox
 
 2. State (Redux store)
-   material: oneOf [ALL, CONCRETE, ...]
+   material: oneOf [EARTH, BITUMEN, ...]
    are: {min, max}
    borderBox: [W, S, E, N] // W - stands for west border (longitude)
 
@@ -54,5 +54,6 @@ When you've finished writing your code, please host it in a publicly accessible 
 
 - mock ui
 - write tests
+- write "server"
 - wire up redux
 - add responsive map

@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
-import { MapboxProvider, MapGL, Layer } from "@react-mapboxgl/core";
+import Dashboard from "./dashoboard/Dashboard";
 
 function App() {
-  return <div className="App" />;
+  return <Dashboard />;
 }
 
 export default App;

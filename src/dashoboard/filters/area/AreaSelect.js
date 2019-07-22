@@ -1,6 +1,6 @@
 import React from "react";
-import F from "../components/filters";
-import RadioButtons from "../components/RadioButtons";
+import F from "../../components/filters";
+import RadioButtons from "../../components/radio/RadioButtons";
 import areaTypes from "./areaTypes";
 import areaRanges from "./areaRanges";
 import { PropTypes } from "prop-types";
@@ -11,7 +11,7 @@ const propTypes = {
     areaTypes.SMALL,
     areaTypes.MEDIUM,
     areaTypes.LARGE
-  ])
+  ]).isRequired
 };
 
 const AreaSelect = ({ areaType }) => {

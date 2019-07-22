@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import F from "../components/filters";
+import F from "../../components/filters";
 
 const Table = styled.table`
   width: 100%;
@@ -31,7 +31,8 @@ const propTypes = {
   materials: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired
+      count: PropTypes.number.isRequired,
+      active: PropTypes.bool.isRequired
     })
   )
 };
@@ -42,7 +43,7 @@ const MaterialList = ({ materials }) => (
     <Table>
       <TBody>
         {materials.map(material => (
-          <TRow key={material.label}>
+          <TRow key={material.label} data-test="material">
             <TLabel>{material.label}</TLabel>
             <TValue>{material.count}</TValue>
           </TRow>

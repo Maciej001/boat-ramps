@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import F from "../components/filters";
-import MaterialList from "./MaterialList";
-import areaTypes from "./areaTypes";
-import AreaSelect from "./AreaSelect";
+import MaterialList from "./material/MaterialList";
+import areaTypes from "./area/areaTypes";
+import AreaSelect from "./area/AreaSelect";
 
 const propTypes = {
   materials: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      count: PropTypes.string.isRequired,
+      count: PropTypes.number.isRequired,
       active: PropTypes.bool.isRequired
     })
   ),

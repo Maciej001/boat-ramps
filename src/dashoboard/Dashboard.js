@@ -1,14 +1,14 @@
 import React from "react";
 import Filters from "./filters/Filters";
 import { PageContainer, PageTitle, MainArea } from "./components/common";
-import materials from "./filters/materialTypes";
-import areaTypes from "./filters/areaTypes";
+import areaTypes from "./filters/area/areaTypes";
 import Map from "./map/Map";
+import materialTypes from "./filters/material/materialTypes";
 
 const Dashboard = () => {
   const rampMaterials = [
-    { label: materials.BITUMEN, count: 7, active: true },
-    { label: materials.EARTH, count: 2, active: false }
+    { label: materialTypes.BITUMEN, count: 7, active: true },
+    { label: materialTypes.EARTH, count: 2, active: false }
   ];
   const features = [];
   return (

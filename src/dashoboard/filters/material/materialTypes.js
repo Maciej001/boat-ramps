@@ -1,4 +1,5 @@
 const materialTypes = {
+  ALL: "All",
   GRAVEL: "Gravel",
   CONCRETE: "Concrete",
   BITUMEN: "Bitumen",

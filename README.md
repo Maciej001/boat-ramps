@@ -28,8 +28,8 @@ When you've finished writing your code, please host it in a publicly accessible 
 1. Simple UI with two areas (see UI.jpg)
 
 - Filters:
-  - ramp material
-  - area (min, max)
+  - ramp material (EARTH, CONCRETE)
+  - area ( )
 - Map - using mapbox
 
 2. State (Redux store)

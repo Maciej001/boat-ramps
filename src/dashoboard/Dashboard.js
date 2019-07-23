@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Filters from "./filters/Filters";
 import { PageContainer, PageTitle, MainArea } from "./components/common";
 import Map from "./map/Map";
@@ -16,6 +16,14 @@ const Dashboard = () => {
   //   0
   // );
 
+  // Check localStore for data
+  const localCacheData = JSON.parse(localStorage.getItem("boat.ramps"));
+
+  // Initial data
+  if (localCacheData) {
+  } else {
+  }
+
   const features = [];
   return (
     <PageContainer>
@@ -23,7 +31,7 @@ const Dashboard = () => {
 
       <MainArea>
         <Filters materials={rampMaterials} />
-        <Map className="Map" features={features} />
+        <Map features={features} />
       </MainArea>
     </PageContainer>
   );

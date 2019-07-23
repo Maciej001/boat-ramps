@@ -1,22 +1,28 @@
 import React from "react";
 import Filters from "./filters/Filters";
 import { PageContainer, PageTitle, MainArea } from "./components/common";
-import areaTypes from "./filters/area/areaTypes";
 import Map from "./map/Map";
 import materialTypes from "./filters/material/materialTypes";
 
 const Dashboard = () => {
   const rampMaterials = [
-    { label: materialTypes.BITUMEN, count: 7, active: true },
-    { label: materialTypes.EARTH, count: 2, active: false }
+    { label: materialTypes.ALL, count: 9 },
+    { label: materialTypes.BITUMEN, count: 7 },
+    { label: materialTypes.EARTH, count: 2 }
   ];
+
+  // const allMaterialsCount = rampMaterials.reduce(
+  //   (total, material) => total + parseInt(material.count),
+  //   0
+  // );
+
   const features = [];
   return (
     <PageContainer>
       <PageTitle>Boat Ramps</PageTitle>
 
       <MainArea>
-        <Filters materials={rampMaterials} areaType={areaTypes.ALL} />
+        <Filters materials={rampMaterials} />
         <Map className="Map" features={features} />
       </MainArea>
     </PageContainer>

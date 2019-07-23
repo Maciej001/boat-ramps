@@ -1,5 +1,4 @@
 import { SET_MATERIAL } from "./actionTypes";
-import materialTypes from "../materialTypes";
 
 /**
  * @function setMaterial
@@ -8,5 +7,5 @@ import materialTypes from "../materialTypes";
  */
 export const setMaterial = type => ({
   type: SET_MATERIAL,
-  materialType: materialTypes[type]
+  materialType: type
 });

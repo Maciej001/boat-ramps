@@ -1,34 +1,22 @@
 import React from "react";
+
 import F from "../../components/filters";
 import RadioButtons from "../../components/radio/RadioButtons";
 import areaTypes from "./areaTypes";
 import areaRanges from "./areaRanges";
-import { PropTypes } from "prop-types";
 
-const propTypes = {
-  areaType: PropTypes.oneOf([
-    areaTypes.ALL,
-    areaTypes.SMALL,
-    areaTypes.MEDIUM,
-    areaTypes.LARGE
-  ]).isRequired
-};
-
-const AreaSelect = ({ areaType }) => {
+const AreaSelect = () => {
   const options = Object.keys(areaTypes).map(type => ({
     type,
-    label: areaRanges[type].label,
-    active: type === areaType
+    label: areaRanges[type].label
   }));
 
   return (
-    <F.Filter>
+    <F.Filter data-test="area-filters">
       <F.FilterLabel>Area</F.FilterLabel>
-      <RadioButtons options={options} onSelect={() => {}} />
+      <RadioButtons options={options} />
     </F.Filter>
   );
 };
-
-AreaSelect.propTypes = propTypes;
 
 export default AreaSelect;

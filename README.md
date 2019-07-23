@@ -28,13 +28,13 @@ When you've finished writing your code, please host it in a publicly accessible 
 1. Simple UI with two areas (see UI.jpg)
 
 - Filters:
-  - ramp material (EARTH, CONCRETE)
-  - area ( )
+  - material one of ALL, EARTH, CONCRETE, ...
+  - area one of ALL, SMALL, MEDIUM, LARGE
 - Map - using mapbox
 
 2. State (Redux store)
    material: oneOf [EARTH, BITUMEN, ...]
-   are: {min, max}
+   area: {min, max}
    borderBox: [W, S, E, N] // W - stands for west border (longitude)
 
 3. How it will work?

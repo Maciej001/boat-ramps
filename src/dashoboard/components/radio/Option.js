@@ -1,8 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
+
 import { UncheckedIcon, CheckedIcon } from "../icons";
 import { PropTypes } from "prop-types";
 import areaTypes from "../../filters/area/areaTypes";
+import { setArea } from "../../filters/area/redux/actionCreators";
 
 const OptionContainer = styled.div`
   display: flex;
@@ -26,7 +29,7 @@ const IconContainer = styled.span`
   transform: translateY(-2px);
   svg {
     width: 20px;
-    fill: ${props => (props.active ? "blue" : "black")};
+    fill: ${props => (props.active ? "blue" : "#666")};
   }
 `;
 
@@ -38,29 +41,49 @@ const propTypes = {
       areaTypes.MEDIUM,
       areaTypes.LARGE
     ]).isRequired,
-    label: PropTypes.string.isRequired,
-    active: PropTypes.bool.isRequired
+    label: PropTypes.string.isRequired
   }),
-  onClick: PropTypes.func.isRequired
+  selectedArea: PropTypes.oneOf([
+    areaTypes.ALL,
+    areaTypes.SMALL,
+    areaTypes.MEDIUM,
+    areaTypes.LARGE
+  ]).isRequired,
+  onSelect: PropTypes.func.isRequired
 };
 
-const Option = ({ option, onClick }) => (
-  <OptionContainer
-    onClick={onClick}
-    active={option.active}
-    data-test="option-container"
-  >
-    <IconContainer active={option.active}>
-      {option.active ? (
-        <CheckedIcon data-test="checked-icon" />
-      ) : (
-        <UncheckedIcon data-test="unchecked-icon" />
-      )}
-    </IconContainer>
-    <span>{option.label}</span>
-  </OptionContainer>
-);
+const Option = ({ option, selectedArea, onSelect }) => {
+  const active = option.type === selectedArea;
+
+  return (
+    <OptionContainer
+      active={active}
+      onClick={() => onSelect(option.type)}
+      data-test="option-container"
+    >
+      <IconContainer active={active}>
+        {active ? (
+          <CheckedIcon data-test="checked-icon" />
+        ) : (
+          <UncheckedIcon data-test="unchecked-icon" />
+        )}
+      </IconContainer>
+      <span>{option.label}</span>
+    </OptionContainer>
+  );
+};
 
 Option.propTypes = propTypes;
 
-export default Option;
+const mapStateToProps = state => ({
+  selectedArea: state.area
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSelect: type => dispatch(setArea(type))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Option);

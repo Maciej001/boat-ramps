@@ -5,19 +5,14 @@ import { findByTestAttr } from "../../../test/testUtils";
 
 describe("<RadioButtons />", () => {
   const options = [
-    { type: "ALL", label: "All", active: true },
-    { type: "SMALL", label: "0-50", active: false },
-    { type: "MEDIUM", label: "50-200", active: false },
-    { type: "LARGE", label: "200-500", active: false }
+    { type: "ALL", label: "All" },
+    { type: "SMALL", label: "0-50" },
+    { type: "MEDIUM", label: "50-200" },
+    { type: "LARGE", label: "200-500" }
   ];
-  const onSelect = () => {};
-
-  let wrapper;
-  beforeEach(() => {
-    wrapper = shallow(<RadioButtons options={options} onSelect={onSelect} />);
-  });
 
   it("should render correct number of options", () => {
+    const wrapper = shallow(<RadioButtons options={options} />);
     const optionItems = findByTestAttr(wrapper, "radio-button-option");
     expect(optionItems.length).toBe(options.length);
   });

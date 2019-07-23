@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import F from "../../components/filters";
+import { connect } from "react-redux";
+import { setMaterial } from "./redux/actionCreators";
+import materialTypes from "./materialTypes";
 
 const Table = styled.table`
   width: 100%;
@@ -31,23 +34,43 @@ const propTypes = {
   materials: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-      active: PropTypes.bool.isRequired
+      count: PropTypes.number.isRequired
     })
-  )
+  ).isRequired,
+  activeMaterial: PropTypes.oneOf([
+    materialTypes.ALL,
+    materialTypes.GRAVEL,
+    materialTypes.CONCRETE,
+    materialTypes.BITUMEN,
+    materialTypes.INTERLOCK,
+    materialTypes.EARTH,
+    materialTypes.OTHER
+  ]).isRequired,
+  onSelect: PropTypes.func.isRequired
 };
 
-const MaterialList = ({ materials }) => (
-  <F.Filter>
+const MaterialList = ({ materials, activeMaterial, onSelect }) => (
+  <F.Filter data-test="material-component">
     <F.FilterLabel>Material</F.FilterLabel>
     <Table>
       <TBody>
-        {materials.map(material => (
-          <TRow key={material.label} data-test="material">
-            <TLabel>{material.label}</TLabel>
-            <TValue>{material.count}</TValue>
-          </TRow>
-        ))}
+        {materials.map(material => {
+          const active = material.label === activeMaterial;
+          return (
+            <TRow
+              key={material.label}
+              onClick={() => {
+                console.log(`material.label`, material.label);
+                onSelect(material.label);
+              }}
+              data-test="material"
+            >
+              <TLabel active={active}>{material.label}</TLabel>
+
+              <TValue active={active}>{material.count}</TValue>
+            </TRow>
+          );
+        })}
       </TBody>
     </Table>
   </F.Filter>
@@ -55,4 +78,15 @@ const MaterialList = ({ materials }) => (
 
 MaterialList.propTypes = propTypes;
 
-export default MaterialList;
+const mapStateToProps = state => ({
+  activeMaterial: state.material
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSelect: type => dispatch(setMaterial(type))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MaterialList);

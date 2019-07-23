@@ -19,24 +19,23 @@ const propTypes = {
         areaTypes.MEDIUM,
         areaTypes.LARGE
       ]).isRequired,
-      label: PropTypes.string.isRequired,
-      active: PropTypes.bool.isRequired
+      label: PropTypes.string.isRequired
     })
-  ),
-  onSelect: PropTypes.func.isRequired
+  )
 };
 
-const RadioButtons = ({ options, onSelect }) => (
+const RadioButtons = ({ options }) => (
   <Container data-test="radio-buttons-component">
     {options.map(option => (
       <Option
         key={option.label}
         option={option}
-        onClick={onSelect}
         data-test="radio-button-option"
       />
     ))}
   </Container>
 );
+
+RadioButtons.proopTypes = propTypes;
 
 export default RadioButtons;

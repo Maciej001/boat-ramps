@@ -1,9 +1,7 @@
 import materialTypes from "../materialTypes";
-import { SET_MATERIAL } from "./actions";
+import { SET_MATERIAL } from "./actionTypes";
 
-const initialState = {
-  material: materialTypes.ALL
-};
+const initialState = materialTypes.ALL;
 
 /**
  * @function materialReducer
@@ -11,11 +9,13 @@ const initialState = {
  * @param {object} action
  * @returns {string} - new state
  */
-export default (state = initialState, action) => {
+const materialReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_MATERIAL:
-      return { ...state, material: action.materialType };
+      return action.materialType;
     default:
       return state;
   }
 };
+
+export default materialReducer;

@@ -1,5 +1,5 @@
 import areaTypes from "../areaTypes";
-import { SET_AREA } from "./actions";
+import { SET_AREA } from "./actionTypes";
 
 /**
  * @function setArea

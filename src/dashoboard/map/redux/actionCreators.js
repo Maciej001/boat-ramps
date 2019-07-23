@@ -1,4 +1,4 @@
-import { SET_BORDER_BOX } from "./actions";
+import { SET_BORDER_BOX } from "./actionTypes";
 
 /**
  * Sets the longitude and latitude edges of the map <Map />

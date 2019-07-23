@@ -1,9 +1,7 @@
 import areaTypes from "../areaTypes";
-import { SET_AREA } from "./actions";
+import { SET_AREA } from "./actionTypes";
 
-const initialState = {
-  area: areaTypes.ALL
-};
+const initialState = areaTypes.ALL;
 
 /**
  * @function areaReducer
@@ -11,11 +9,13 @@ const initialState = {
  * @param {object} action
  * @returns {string} - new state, eg. MEDIUM
  */
-export default (state = initialState, action) => {
+const areaReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_AREA:
-      return { ...state, area: action.areaType };
+      return action.areaType;
     default:
       return state;
   }
 };
+
+export default areaReducer;

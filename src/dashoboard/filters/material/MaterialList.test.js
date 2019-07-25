@@ -2,7 +2,6 @@ import React from "react";
 import { shallow } from "enzyme";
 import MaterialList from "./MaterialList";
 import { findByTestAttr, storeFactory } from "../../../test/testUtils";
-
 const materials = [
   { label: "Bitumen", count: 7 },
   { label: "Earth", count: 3 },
@@ -26,10 +25,5 @@ describe("<MaterialList />", () => {
   it("renders component without error", () => {
     const component = findByTestAttr(wrapper, "material-component");
     expect(component.length).toBe(1);
-  });
-
-  it("should render correct number of materials", () => {
-    const materialRows = findByTestAttr(wrapper, "material");
-    expect(materialRows.length).toBe(materials.length);
   });
 });

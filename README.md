@@ -33,6 +33,7 @@ When you've finished writing your code, please host it in a publicly accessible 
 - Map - using mapbox
 
 2. State (Redux store)
+   cache: [ { filters, data }, {filters, data }]
    material: oneOf [EARTH, BITUMEN, ...]
    area: {min, max}
    borderBox: [W, S, E, N] // W - stands for west border (longitude)

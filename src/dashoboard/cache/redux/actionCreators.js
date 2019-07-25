@@ -61,7 +61,13 @@ export const fetchData = async filters => {
 export const initCache = () => async (dispatch, getState) => {
   const { area, material } = getState();
   const filters = { area, material };
-  const data = await fetchData(filters);
+
+  let data = JSON.parse(localStorage.getItem("boatramps.data"));
+
+  if (!data) {
+    data = await fetchData(filters);
+    localStorage.setItem("boatramps.data", JSON.stringify(data));
+  }
 
   dispatch(cacheData(filters, data));
 };

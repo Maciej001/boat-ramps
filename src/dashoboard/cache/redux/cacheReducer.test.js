@@ -4,9 +4,9 @@ import cacheReducer from "./cacheReducer";
 describe("cacheReducer", () => {
   it("returns default initial state of empty Map, when no action & state is passed", () => {
     const newState = cacheReducer(undefined, {});
-    expect(newState).toBeInstanceOf(Map);
+    expect(newState).toBeInstanceOf(Array);
   });
-  it("returns correct new state after receiving action ADD_DATA", () => {
+  it("stores data in cache after receiving action ADD_DATA", () => {
     const filters = {
       material: "Earth",
       area: "All"
@@ -18,7 +18,6 @@ describe("cacheReducer", () => {
       filters
     });
 
-    expect(newState.has(filters)).toBeTruthy();
-    expect(newState.get(filters)).toEqual(data);
+    expect(newState[0].data).toEqual(data);
   });
 });

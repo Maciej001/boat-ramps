@@ -13,12 +13,12 @@ const MapContainer = styled.div`
   }
 `;
 
-const propTypes = {
-  data: PropTypes.arrayOf(PropTypes.any)
-};
+// const propTypes = {
+//   data: PropTypes.arrayOf(PropTypes.any)
+// };
 
 const Map = ({ data }) => <MapContainer />;
 
-Map.propTypes = propTypes;
+// Map.propTypes = propTypes;
 
 export default Map;

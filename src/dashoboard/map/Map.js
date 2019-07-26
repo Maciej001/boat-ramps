@@ -53,10 +53,6 @@ class BoatMap extends Component {
             width: "100%"
           }}
           fitBounds={box}
-          onZoom={props => {
-            console.log(`this.mapRef`, this.mapRef);
-            console.log("zoom end with props", props);
-          }}
         >
           {data.data.map(feature => (
             <Marker

@@ -1,6 +1,23 @@
-#cReact/Redux Technical challenge
+# React/Redux Technical challenge
 
-## Data
+To run the project:
+
+```
+git clone git@github.com:Maciej001/boat-ramps.git
+cd boat-ramps
+```
+
+Install dependencies either using npm `npm install` or `yarn`
+
+To run the project `npm start` or `yarn start`
+
+Here you will find:
+
+- Project - what needs to be done
+- Plan - that worked to the cerain extent
+- How it works
+
+## Project
 
 The project contains a data set describing the location and metadata of boat ramps in Australia's Gold Coast. The data set can be found under ./data/boat_ramps.geojson.
 
@@ -58,3 +75,21 @@ When you've finished writing your code, please host it in a publicly accessible 
 - write "server"
 - wire up redux
 - add responsive map
+
+## How it works
+
+To display the information on the map our app needs to now: - the ramp's material - size of the ramp - the box - geolocation data in following format - bottom-left corner - upper-right corner
+in the form of an array [left, bottom], [right, top]]
+
+1. On the first load, the app loads all the information and stores them in `localStorage`. That helps to avoid the roundtrip to the server on initial load.
+2. Data for every filter's combination is cached in redux store: key - filter, value - data
+3. Filter has three properties: material, area, box
+4. If the filter is recogniesed (it exists in cache), we are getting data immediately - no map flickerring
+5. In all the other cases we have to ping the server and then filter and cash data
+6. Filtering of data happens when the new set of data has been fetched (`fetchData`) by passing of a combination of filtering functions to `getFiltersPipe` in `/dashboard/cache/redux/actionCreators`
+
+## The onZoom function is not implemented yet.
+
+```
+
+```

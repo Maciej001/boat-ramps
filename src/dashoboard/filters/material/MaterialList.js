@@ -5,6 +5,7 @@ import F from "../../components/filters";
 import { connect } from "react-redux";
 import { setMaterial } from "./redux/actionCreators";
 import materialTypes from "./materialTypes";
+import { getMaterialColor } from "../../components/utils";
 
 const Table = styled.table`
   width: 100%;
@@ -17,9 +18,15 @@ const TRow = styled.tr`
   width: 100%;
 `;
 const TLabel = styled.td`
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: bold;
   padding: 5px 20px 5px 0;
-  color: ${props => (props.active ? "blue" : props.hasData ? "#666" : "#AAA")};
+  color: ${props =>
+    props.active
+      ? props.theme[`${props.color}500`]
+      : props.hasData
+      ? props.theme.grey500
+      : props.theme.grey300};
 `;
 
 const TValue = styled.td`
@@ -27,7 +34,8 @@ const TValue = styled.td`
   font-weight: bold;
   text-align: right;
   padding: 5px 0 5px 20px;
-  color: ${props => (props.active ? "blue" : "#222")};
+  color: ${props =>
+    props.active ? props.theme[`${props.color}500`] : props.theme.grey300};
 `;
 
 const propTypes = {
@@ -44,43 +52,53 @@ const propTypes = {
   onSelect: PropTypes.func.isRequired
 };
 
-const MaterialList = ({ materials, activeMaterial, onSelect }) => (
-  <F.Filter data-test="material-component">
-    <F.FilterLabel>Material</F.FilterLabel>
-    <Table>
-      <TBody>
-        {materials &&
-          Object.keys(materials).map(material => {
-            const active = material === activeMaterial;
-            return (
-              <TRow
-                key={material}
-                onClick={() => {
-                  onSelect(material);
-                }}
-                data-test="material"
-              >
-                <TLabel active={active} hasData={!!materials[material]}>
-                  {material}
-                </TLabel>
+const MaterialList = ({ materials, activeMaterial, onSelect }) => {
+  const materialColor = getMaterialColor(activeMaterial);
+  return (
+    <F.Filter data-test="material-component">
+      <F.FilterLabel>Material</F.FilterLabel>
+      <Table>
+        <TBody>
+          {materials &&
+            Object.keys(materials).map(material => {
+              const active = material === activeMaterial;
+              return (
+                <TRow
+                  key={material}
+                  onClick={() => {
+                    onSelect(material);
+                  }}
+                  data-test="material"
+                >
+                  <TLabel
+                    active={active}
+                    color={materialColor}
+                    hasData={!!materials[material]}
+                  >
+                    {material}
+                  </TLabel>
 
-                {!!materials[material] && (
-                  <TValue active={active}>{materials[material]}</TValue>
-                )}
-              </TRow>
-            );
-          })}
-      </TBody>
-    </Table>
-  </F.Filter>
-);
+                  {!!materials[material] && (
+                    <TValue active={active} color={materialColor}>
+                      {materials[material]}
+                    </TValue>
+                  )}
+                </TRow>
+              );
+            })}
+        </TBody>
+      </Table>
+    </F.Filter>
+  );
+};
 
 MaterialList.propTypes = propTypes;
 
 const getMaterials = state => {
-  const { cache, material, area } = state;
+  const { cache, material, area, box } = state;
   const cachedItem = cache.find(
-    item => JSON.stringify(item.filters) === JSON.stringify({ area, material })
+    item =>
+      JSON.stringify(item.filters) === JSON.stringify({ area, material, box })
   );
   return cachedItem ? getMaterialsList(cachedItem.data) : {};
 };

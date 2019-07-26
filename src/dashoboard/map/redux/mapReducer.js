@@ -1,6 +1,6 @@
 import { SET_BORDER_BOX } from "./actionTypes";
 
-export const initialState = [153, -28, 154, -27];
+export const initialState = [[153, -28.5], [154, -27]];
 
 /**
  * @function mapReducer

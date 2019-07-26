@@ -21,8 +21,8 @@ export const setMaterialFilter = type => ({
  * @returns {object} action
  */
 export const setMaterial = type => async (dispatch, getState) => {
-  const { area, cache } = getState();
-  const filters = { area, material: type };
+  const { area, box, cache } = getState();
+  const filters = { area, material: type, box };
   dispatch(setMaterialFilter(type));
 
   if (!isCached(filters, cache)) {

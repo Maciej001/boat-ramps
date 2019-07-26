@@ -17,8 +17,10 @@ const OptionContainer = styled.div`
   span {
     display: inline-block;
     line-height: 32px;
-    font-size: 16px;
-    color: ${props => (props.active ? "blue" : "#666")};
+    font-size: 14px;
+    font-weight: bold;
+    color: ${props =>
+      props.active ? props.theme.primary500 : props.theme.grey500};
   }
 `;
 
@@ -29,7 +31,8 @@ const IconContainer = styled.span`
   transform: translateY(-2px);
   svg {
     width: 20px;
-    fill: ${props => (props.active ? "blue" : "#666")};
+    fill: ${props =>
+      props.active ? props.theme.primary500 : props.theme.grey500};
   }
 `;
 

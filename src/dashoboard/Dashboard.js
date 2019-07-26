@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Filters from "./filters/Filters";
-import { PageContainer, PageTitle, MainArea } from "./components/common";
+import { PageContainer, MainArea } from "./components/common";
 import Map from "./map/Map";
 import { initCache } from "./cache/redux/actionCreators";
 
@@ -13,7 +13,6 @@ class Dashboard extends Component {
   render() {
     return (
       <PageContainer>
-        <PageTitle>Boat Ramps</PageTitle>
         <MainArea>
           <Filters />
           <Map />

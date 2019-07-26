@@ -3,6 +3,7 @@ import { ADD_DATA } from "./actionTypes";
 import materialTypes from "../../filters/material/materialTypes.js";
 import areaRanges from "../../filters/area/areaRanges";
 import areaTypes from "../../filters/area/areaTypes.js";
+import { getBox } from "../../map/redux/actionCreators.js";
 
 /**
  * Returns a function that will execute f2 first and then f1
@@ -11,10 +12,10 @@ import areaTypes from "../../filters/area/areaTypes.js";
  * @returns {boolean}
  */
 const getFiltersPipe = (filter, ...fns) => feature =>
-  fns.reduce((isIn, fn) => isIn && fn(filter, feature), true);
+  fns.reduce((thru, fn) => thru && fn(filter, feature), true);
 
 /**
- * @param {object} filter {area, material} filter passed from state
+ * @param {object} filter {area, material, box} filter passed from state
  * @param {object} feature feature from geojson
  * @return {boolean} should the feature be included in the collection
  */
@@ -25,8 +26,8 @@ const materialFilter = (filter, feature) =>
 
 /**
  *
- * @param {object} filter { area, material } filter passed from state
- * @param {*} feature feature from geojson
+ * @param {object} filter { area, material, box } filter passed from state
+ * @param {object} feature feature from geojson
  * @returns {boolean} should the feature be included in the collection
  */
 const areaFilter = (filter, feature) => {
@@ -37,6 +38,24 @@ const areaFilter = (filter, feature) => {
     ? true
     : featureArea >= area.min && featureArea < area.max;
 };
+
+/**
+ *
+ * @param {} filter
+ * @param {object} feature object from geojson
+ */
+const boxFilter = (filter, feature) =>
+  feature.geometry.coordinates[0][0].reduce(
+    (acc, item, index) =>
+      acc ||
+      (item[0] > filter.box[0][0] &&
+        item[1] > filter.box[0][1] &&
+        item[0] < filter.box[1][0] &&
+        item[1] < filter.box[1][1])
+        ? true
+        : false,
+    false
+  );
 
 /**
  * Checks if data for given filters has been already cached in store;
@@ -54,22 +73,33 @@ export const isCached = (filters, cache) => {
  * @param {object} filters { area, material } from state
  */
 export const fetchData = async filters => {
-  const pipe = getFiltersPipe(filters, materialFilter, areaFilter);
+  const pipe = getFiltersPipe(filters, materialFilter, areaFilter, boxFilter);
   return data.features.filter(pipe);
 };
 
+/**
+ * When the app initialises it fetches the data either from the localStorage
+ * or fetches data from the "server"
+ */
 export const initCache = () => async (dispatch, getState) => {
-  const { area, material } = getState();
-  const filters = { area, material };
+  const { area, material, box } = getState();
+  const filters = { area, material, box };
 
+  // Check if data were cached in local storage before
   let data = JSON.parse(localStorage.getItem("boatramps.data"));
 
   if (!data) {
     data = await fetchData(filters);
+
+    // Assumption: The initial filter and data are unchanged.
+    // That's there is no need to store  the filter too
     localStorage.setItem("boatramps.data", JSON.stringify(data));
   }
 
-  dispatch(cacheData(filters, data));
+  // getBox also saves the box in filters
+  const boxFromFeatures = getBox(data, dispatch);
+
+  dispatch(cacheData({ ...filters, box: boxFromFeatures }, data));
 };
 
 /**

@@ -5,7 +5,7 @@ export const PageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  padding: 20px;
+  padding: 40px 20px;
 `;
 
 export const MainArea = styled.div`
@@ -15,11 +15,4 @@ export const MainArea = styled.div`
   @media (max-width: 600px) {
     flex-direction: column;
   }
-`;
-
-export const PageTitle = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  color: black;
-  margin-bottom: 20px;
 `;

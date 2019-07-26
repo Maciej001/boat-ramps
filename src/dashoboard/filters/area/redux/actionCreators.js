@@ -21,9 +21,11 @@ const setAreaFilter = type => ({
  * @returns {object} action
  */
 export const setArea = type => async (dispatch, getState) => {
-  const { material, cache } = getState();
-  const filters = { area: type, material };
   dispatch(setAreaFilter(type));
+
+  const { material, box, cache } = getState();
+  const filters = { area: type, material, box };
+
   if (!isCached(filters, cache)) {
     const newData = await fetchData(filters);
     dispatch(cacheData(filters, newData));
